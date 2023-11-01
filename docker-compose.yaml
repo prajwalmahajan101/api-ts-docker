@@ -1,21 +1,45 @@
 version: '3.8'
 services:
-    npm:
+    npm: # utility
         build:
-            context: .
-            dockerfile: ./images/node-app.dockerfile
+            context: ./app
+            dockerfile: Dockerfile
         entrypoint: ['npm']
         volumes:
             - ./app/node_modules:/app/node_modules
             - ./app/package.json:/app/package.json
+        env_file:
+            - ./envs/node-app.env
+
+    f-npm: # utility
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+            target: builder
+        entrypoint: ['npm']
+        volumes:
+            - ./frontend/node_modules:/app/node_modules
+            - ./frontend/package.json:/app/package.json
 
     node:
-        build:
-            context: .
-            dockerfile: ./images/node-app.dockerfile
+        build: ./app
         volumes:
-            - ./app/node_modules:/app/node_modules
-            - ./app/package.json:/app/package.json
-            - ./app/src:/app/src
+            - node_modules:/app/node_modules
+            - ./app/src:/app/src #for development purpose only
         ports:
             - 8000:8000
+        env_file:
+            - ./envs/node-app.env
+
+    frontend:
+        build: ./frontend
+        volumes:
+            - react_modules:/app/node_modules
+        ports:
+            - 80:80
+        depends_on:
+            - node
+
+volumes:
+    node_modules:
+    react_modules:

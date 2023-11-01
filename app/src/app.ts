@@ -4,7 +4,7 @@ const app = express();
 
 app.use('/', (req, res) => {
 	res.status(200).json({
-		msg: 'Working alright',
+		msg: `Working with docker ${process.env.TEST_VAR}`,
 	});
 });
 
