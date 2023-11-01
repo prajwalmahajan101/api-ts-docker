@@ -17,7 +17,7 @@ function App() {
 	console.log(process.env);
 	return (
 		<div className="App">
-			<h1>Hi, There {process.env.REACT_APP_TEST_REACT_VAR}</h1>
+			<h1>{process.env.REACT_APP_TEST_REACT_VAR}</h1>
 			<hr></hr>
 			<h1>{message}</h1>
 		</div>

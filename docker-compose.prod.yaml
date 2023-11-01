@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+    api:
+        build: ./app
+        volumes:
+            - node_modules_prod:/app/node_modules
+        ports:
+            - 8000:8000
+        env_file:
+            - ./envs/node-app.env
+    app:
+        build: ./frontend
+        volumes:
+            - react_modules_prod:/app/node_modules
+        ports:
+            - 80:80
+        depends_on:
+            - api
+volumes:
+    node_modules_prod:
+    react_modules_prod:
