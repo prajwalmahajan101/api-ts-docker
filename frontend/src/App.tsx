@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import axios from 'axios';
+import { API_HOST } from './constants/API';
+
+import './App.css';
 
 function App() {
 	const [message, setMessage] = useState<string>('');
 	useEffect(() => {
 		const getData = async () => {
-			let res = await axios.get<{ msg: string }>('/api');
+			let res = await axios.get<{ msg: string }>(`${API_HOST}/api`);
 			let data = res.data;
 			setMessage(data.msg);
 		};
@@ -16,7 +17,7 @@ function App() {
 	console.log(process.env);
 	return (
 		<div className="App">
-			<h1>{process.env.REACT_APP_TEST_REACT_VAR}</h1>
+			<h1>Hi, There {process.env.REACT_APP_TEST_REACT_VAR}</h1>
 			<hr></hr>
 			<h1>{message}</h1>
 		</div>
